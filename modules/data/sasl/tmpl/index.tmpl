@@ -21,6 +21,15 @@
 						</div>
 				</div>
 
+                <? IF HaveLibSSL ?>
+                <div class="form-group">
+                    <label for="SASLECDSAPubKey" class="col-sm-2 control-label">ECDSA Public Key:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SASLECDSAPubKey" name="publickey" autocomplete="off" value="<? VAR PublicKey ?>" readonly>
+                        </div>
+                </div>
+                <? ENDIF ?>
+
 				<div class="form-group">
 					<label for="inputSASLUsername" class="col-sm-2 control-label">Connect:</label>
 						<div class="col-sm-10">
@@ -37,6 +46,9 @@
 
 			</div>
 			<div class="panel-footer text-right">
+                <? IF HaveLibSSL ?>
+                <input class="btn btn-primary" type="submit" name="keygen" value="Generate ECDSA Key">
+                <? ENDIF ?>
 				<input class="btn btn-danger" type="reset" value="Reset">
 				<input class="btn btn-success" type="submit" name="save" value="Save" />
 			</div>
