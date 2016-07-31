@@ -2139,14 +2139,18 @@ CString CZNC::FixupEncoding(const CString& sEncoding) const {
     return sEncoding;
 }
 
-void CZNC::AddNetworkToQueue(CIRCNetwork* pNetwork) {
+void CZNC::AddNetworkToQueue(CIRCNetwork* pNetwork, bool bPriority) {
     // Make sure we are not already in the queue
     if (std::find(m_lpConnectQueue.begin(), m_lpConnectQueue.end(), pNetwork) !=
         m_lpConnectQueue.end()) {
         return;
     }
 
-    m_lpConnectQueue.push_back(pNetwork);
+    if (bPriority) {
+        m_lpConnectQueue.push_front(pNetwork);
+    } else {
+        m_lpConnectQueue.push_back(pNetwork);
+    }
     EnableConnectQueue();
 }
 

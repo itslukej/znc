@@ -228,7 +228,7 @@ class CZNC {
         return (b && *b);
     }
 
-    void AddNetworkToQueue(CIRCNetwork* pNetwork);
+    void AddNetworkToQueue(CIRCNetwork* pNetwork, bool bPriority);
     std::list<CIRCNetwork*>& GetConnectionQueue() { return m_lpConnectQueue; }
 
     // This creates a CConnectQueueTimer if we haven't got one yet
