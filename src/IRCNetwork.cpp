@@ -140,6 +140,7 @@ CIRCNetwork::CIRCNetwork(CUser* pUser, const CString& sName)
       m_vQueries(),
       m_sChanPrefixes(""),
       m_bIRCConnectEnabled(true),
+      m_bIRCSSLVerifyEnabled(true),
       m_sIRCServer(""),
       m_vServers(),
       m_uServerIdx(0),
@@ -171,6 +172,7 @@ CIRCNetwork::CIRCNetwork(CUser* pUser, const CString& sName)
     CZNC::Get().GetManager().AddCron(m_pJoinTimer);
 
     SetIRCConnectEnabled(true);
+    SetIRCSSLVerifyEnabled(true);
 }
 
 CIRCNetwork::CIRCNetwork(CUser* pUser, const CIRCNetwork& Network)
@@ -194,6 +196,7 @@ void CIRCNetwork::Clone(const CIRCNetwork& Network, bool bCloneName) {
     SetBindHost(Network.GetBindHost());
     SetEncoding(Network.GetEncoding());
     SetQuitMsg(Network.GetQuitMsg());
+    SetIRCSSLVerifyEnabled(Network.GetIRCSSLVerifyEnabled());
     m_ssTrustedFingerprints = Network.m_ssTrustedFingerprints;
 
     // Servers
@@ -377,6 +380,7 @@ bool CIRCNetwork::ParseConfig(CConfig* pConfig, CString& sError,
         };
         TOption<bool> BoolOptions[] = {
             {"ircconnectenabled", &CIRCNetwork::SetIRCConnectEnabled},
+            {"sslverify", &CIRCNetwork::SetIRCSSLVerifyEnabled},
         };
         TOption<double> DoubleOptions[] = {
             {"floodrate", &CIRCNetwork::SetFloodRate},
@@ -545,6 +549,8 @@ CConfig CIRCNetwork::ToConfig() const {
 
     config.AddKeyValuePair("IRCConnectEnabled",
                            CString(GetIRCConnectEnabled()));
+    config.AddKeyValuePair("SSLVerify",
+                           CString(GetIRCSSLVerifyEnabled()));
     config.AddKeyValuePair("FloodRate", CString(GetFloodRate()));
     config.AddKeyValuePair("FloodBurst", CString(GetFloodBurst()));
     config.AddKeyValuePair("JoinDelay", CString(GetJoinDelay()));
@@ -1272,6 +1278,7 @@ bool CIRCNetwork::Connect() {
     CIRCSock* pIRCSock = new CIRCSock(this);
     pIRCSock->SetPass(pServer->GetPass());
     pIRCSock->SetSSLTrustedPeerFingerprints(m_ssTrustedFingerprints);
+    pIRCSock->SetSSLVerifyEnabled(GetIRCSSLVerifyEnabled());
 
     DEBUG("Connecting user/network [" << m_pUser->GetUserName() << "/"
                                       << m_sName << "]");

@@ -45,6 +45,10 @@ class CZNCSock : public Csock, public CCoreTranslationMixin {
     void SetSSLTrustedPeerFingerprints(const SCString& ssFPs) {
         m_ssTrustedFingerprints = ssFPs;
     }
+    void SetSSLVerifyEnabled(const bool bVerifyDefault = false) {
+        m_bSSLVerifyEnabled = bVerifyDefault;
+    }
+    double GetSSLVerifyEnabled() const { return m_bSSLVerifyEnabled }
 
     void SetEncoding(const CString&);
 
@@ -60,6 +64,7 @@ class CZNCSock : public Csock, public CCoreTranslationMixin {
     CString m_sHostToVerifySSL;
     SCString m_ssTrustedFingerprints;
     SCString m_ssCertVerificationErrors;
+    bool m_bSSLVerifyEnabled;
 };
 
 enum EAddrType { ADDR_IPV4ONLY, ADDR_IPV6ONLY, ADDR_ALL };

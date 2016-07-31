@@ -60,6 +60,7 @@ CZNCSock::CZNCSock(int timeout)
         sCipher = ZNC_DefaultCipher();
     }
     SetCipher(sCipher);
+    SetSSLVerifyEnabled(true);
 #endif
 }
 
@@ -72,6 +73,7 @@ CZNCSock::CZNCSock(const CString& sHost, u_short port, int timeout)
     DisableSSLCompression();
     FollowSSLCipherServerPreference();
     DisableSSLProtocols(CZNC::Get().GetDisabledSSLProtocols());
+    SetSSLVerifyEnabled(true);
 #endif
 }
 
@@ -112,6 +114,11 @@ int CZNCSock::VerifyPeerCertificate(int iPreVerify, X509_STORE_CTX* pStoreCTX) {
 
 void CZNCSock::SSLHandShakeFinished() {
     if (GetType() != ETConn::OUTBOUND) {
+        return;
+    }
+
+    if (!GetSSLVerifyEnabled()) {
+        DEBUG(GetSockName() + ": SSL Verification disabled.");
         return;
     }
 

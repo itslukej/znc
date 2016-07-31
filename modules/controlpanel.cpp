@@ -132,6 +132,7 @@ class CAdminMod : public CModule {
                 {"Encoding", str},
 #endif
                 {"QuitMsg", str},
+                {"SSLVerify", boolean},
             };
             PrintVarsHelp(sVarFilter, nvars, ARRAY_SIZE(nvars),
                           "The following variables are available when using "
@@ -520,6 +521,8 @@ class CAdminMod : public CModule {
 #endif
         } else if (sVar.Equals("quitmsg")) {
             PutModule("QuitMsg = " + pNetwork->GetQuitMsg());
+        } else if (sVar.Equals("sslverify")) {
+            PutModule("SSLVerify = " + CString(pNetwork->GetIRCSSLVerifyEnabled()));
         } else {
             PutModule("Error: Unknown variable");
         }
@@ -596,6 +599,9 @@ class CAdminMod : public CModule {
         } else if (sVar.Equals("quitmsg")) {
             pNetwork->SetQuitMsg(sValue);
             PutModule("QuitMsg = " + pNetwork->GetQuitMsg());
+        } else if (sVar.Equals("sslverify")) {
+            pNetwork->SetIRCSSLVerifyEnabled(sValue.ToBool());
+            PutModule("SSLVerify = " + CString(pNetwork->GetIRCSSLVerifyEnabled()));
         } else {
             PutModule("Error: Unknown variable");
         }

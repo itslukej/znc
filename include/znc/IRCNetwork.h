@@ -266,6 +266,11 @@ class CIRCNetwork {
         m_uJoinDelay = uJoinDelay;
     }
 
+    void SetIRCSSLVerifyEnabled(const bool bVerifyDefault = false) {
+        m_bIRCSSLVerifyEnabled = bVerifyDefault
+    }
+    bool GetIRCSSLVerifyEnabled() const { return m_bIRCSSLVerifyEnabled; }
+
     unsigned long long BytesRead() const { return m_uBytesRead; }
     unsigned long long BytesWritten() const { return m_uBytesWritten; }
 
@@ -305,6 +310,7 @@ class CIRCNetwork {
     CString m_sChanPrefixes;
 
     bool m_bIRCConnectEnabled;
+    bool m_bIRCSSLVerifyEnabled;
     CString m_sIRCServer;
     std::vector<CServer*> m_vServers;
     size_t m_uServerIdx;  ///< Index in m_vServers of our current server + 1

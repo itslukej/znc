@@ -928,6 +928,8 @@ class CWebAdminMod : public CModule {
 
                 Tmpl["QuitMsg"] = pNetwork->GetQuitMsg();
 
+                Tmpl["SSLVerify"] = CString(pNetwork->GetIRCSSLVerifyEnabled());
+
                 Tmpl["FloodProtection"] = CString(
                     CIRCSock::IsFloodProtected(pNetwork->GetFloodRate()));
                 Tmpl["FloodRate"] = CString(pNetwork->GetFloodRate());
@@ -985,6 +987,7 @@ class CWebAdminMod : public CModule {
                 Tmpl["Title"] =
                     f("Add Network for User [{1}]")(pUser->GetUserName());
                 Tmpl["IRCConnectEnabled"] = "true";
+                Tmpl["SSLVerify"] = "true";
                 Tmpl["FloodProtection"] = "true";
                 Tmpl["FloodRate"] = "1.0";
                 Tmpl["FloodBurst"] = "4";
@@ -1075,6 +1078,8 @@ class CWebAdminMod : public CModule {
         pNetwork->SetQuitMsg(WebSock.GetParam("quitmsg"));
 
         pNetwork->SetIRCConnectEnabled(WebSock.GetParam("doconnect").ToBool());
+
+        pNetwork->SetIRCSSLVerifyEnabled(WebSock.GetParam("sslverify").ToBool());
 
         sArg = WebSock.GetParam("bindhost");
         // To change BindHosts be admin or don't have DenySetBindHost
