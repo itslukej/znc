@@ -267,7 +267,7 @@ class CIRCNetwork {
     }
 
     void SetIRCSSLVerifyEnabled(const bool bVerifyDefault = false) {
-        m_bIRCSSLVerifyEnabled = bVerifyDefault
+        m_bIRCSSLVerifyEnabled = bVerifyDefault;
     }
     bool GetIRCSSLVerifyEnabled() const { return m_bIRCSSLVerifyEnabled; }
 
