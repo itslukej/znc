@@ -48,7 +48,7 @@ class CZNCSock : public Csock, public CCoreTranslationMixin {
     void SetSSLVerifyEnabled(const bool bVerifyDefault = false) {
         m_bSSLVerifyEnabled = bVerifyDefault;
     }
-    double GetSSLVerifyEnabled() const { return m_bSSLVerifyEnabled }
+    double GetSSLVerifyEnabled() const { return m_bSSLVerifyEnabled; }
 
     void SetEncoding(const CString&);
 
