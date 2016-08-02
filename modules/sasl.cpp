@@ -369,7 +369,7 @@ class CSASLMod : public CModule {
 #ifdef HAVE_LIBSSL
         } else if (m_Mechanisms.GetCurrent().Equals("ECDSA-NIST256P-CHALLENGE")) {
             AuthenticateECDSA(sLine);
-#ifdef
+#endif
         } else {
             /* Send blank authenticate for other mechanisms (like EXTERNAL). */
             PutIRC("AUTHENTICATE +");
